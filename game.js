@@ -13,3 +13,20 @@ let player = {
     speed: 5
 };
 
+let bullets = [];
+let enemies = [];
+
+document.addEventListener("keydown", (e) => {
+    if (e.code === "ArrowLeft") player.x -= player.speed;
+    if (e.code === "ArrowRight") player.x += player.speed;
+    if (e.code === "Space") {
+        bullets.push({
+            x: player.x + player.width / 2 - 2,
+            y: player.y,
+            width: 4,
+            height: 10,
+            speed: 8
+        });
+    }
+});
+
