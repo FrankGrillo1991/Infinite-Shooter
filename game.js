@@ -30,3 +30,37 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
+function spawnEnemy() {
+    const width = 40;
+    const x = Math.random() * (canvas.width - width);
+    enemies.push({ x, y: 0, width, height: 40, speed: 2 });
+}
+
+function update() {
+    // Move bullets
+    bullets.forEach((b, i) => {
+        b.y -= speed;
+        if (b.y < 0) bullets.splice(i, 1);
+    });
+
+    // Move enemies
+    enemies.forEach((e, i) => {
+        e.y += e.speed;
+        if (e.y > canvas.height) enemies.splice(i, 1);
+    });
+
+    // Collision detection
+    bullets.forEach((b, bi) => {
+        enemies.forEach((e, ei) => {
+            if (
+                b.x < e.x + e.width &&
+                b.x + b.width > e.x &&
+                b.y < e.y + e.height &&
+                b.y + b.height > e.y
+            ) {
+                bullets.splice(bi, 1);
+                enemies.splice(ei, 1);
+            }
+        })
+    })
+}
