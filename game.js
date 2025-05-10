@@ -61,6 +61,33 @@ function update() {
                 bullets.splice(bi, 1);
                 enemies.splice(ei, 1);
             }
-        })
-    })
+        });
+    });
 }
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Player
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Bullets
+    ctx.fillStyle = "white";
+    bullets.forEach((b) => ctx.fillRect(b.x, b.y, b.width, b.height));
+
+    // Enemies
+    ctx.fillStyle = "red";
+    enemies.forEach((e) => ctx.fillRect(e.x, e.y, e.width, e.height));
+}
+
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+// Spawn enemy every 1 second
+setInterval(spawnEnemy, 1000);
+
+gameLoop();
